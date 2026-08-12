@@ -24,9 +24,47 @@ function App() {
 
       default:
         return (
-          <div className="page-content">
-            <h2>Dashboard</h2>
-            <p>Welcome to your Expense Tracker</p>
+          <div className="dashboard">
+            <div className="dashboard-header">
+              <h2>Dashboard - Overview of your finances </h2>
+            </div>
+            
+
+            <div className="allcards">
+              <div className="card">
+                <h3>Total Balance</h3>
+                <p>KSh 25,000</p>
+              </div>
+
+              <div className="card">
+                <h3>Total Income</h3>
+                <p>KSh 40,000</p>
+              </div>
+
+              <div className="card">
+                <h3>Total Expenses</h3>
+                <p>KSh 15,000</p>
+              </div>
+            </div>
+
+            <div className="recent-transactions">
+              <h3>Recent Transactions</h3>
+
+              <div className="transaction-item">
+                <span>Lunch</span>
+                <span>- KSh 500</span>
+              </div>
+
+              <div className="transaction-item">
+                <span>Transport</span>
+                <span>- KSh 300</span>
+              </div>
+
+              <div className="transaction-item">
+                <span>Salary</span>
+                <span>+ KSh 40,000</span>
+              </div>
+            </div>
           </div>
         )
     }

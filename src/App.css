@@ -90,3 +90,60 @@ body {
 .page-content p {
   color: #000205;
 }
+
+.dashboard-header {
+  margin-bottom: 25px;
+  text-align: center;
+  color: #000205;
+}
+
+.allcards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.card:nth-child(1) {
+  background: #d5e2f6;
+}
+
+.card:nth-child(2) {
+  background: #d2f3de;
+}
+
+.card:nth-child(3) {
+  background: #f9bfbf;
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 16px;
+  color: #000000;
+}
+
+
+.recent-transactions {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+}
+
+.recent-transactions h3 {
+  margin-top: 0;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px solid #2d720d;
+  
+}

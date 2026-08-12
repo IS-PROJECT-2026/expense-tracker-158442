@@ -7,12 +7,85 @@ function App() {
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
-        return (
-          <div className="page-content">
-            <h2>Transactions</h2>
-            <p>View and manage your transactions</p>
+  return (
+    <div className="transaction-page">
+
+      <form className="transaction-form">
+        <div className="transaction-header">
+        <h2>Add Transaction</h2>
+        <p>Record a new income or expense.</p>
+      </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            id="description"
+            placeholder="e.g. Lunch"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="amount">Amount</label>
+          <input
+            type="number"
+            id="amount"
+            placeholder="e.g. 200"
+            min="0"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <select id="category">
+            <option value="">Select a category</option>
+            <option value="food">Food</option>
+            <option value="transport">Transport</option>
+            <option value="shopping">Shopping</option>
+            <option value="bills">Rent</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            id="date"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Transaction Type</label>
+
+          <div className="radio-group">
+            <label>
+              <input
+                type="radio"
+                name="type"
+                value="expense"
+                defaultChecked
+              />
+              Expense
+            </label>
+
+            <label>
+              <input
+                type="radio"
+                name="type"
+                value="income"
+              />
+              Income
+            </label>
           </div>
-        )
+        </div>
+
+        <button type="submit" className="submit-button">
+          Add Transaction
+        </button>
+      </form>
+    </div>
+  )
 
       case 'analytics':
         return (

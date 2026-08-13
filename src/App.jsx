@@ -1,11 +1,62 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import transactions from './data/transactions'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
   const [transactionPage, setTransactionPage] = useState('add')
+  const [transactionList, setTransactionList] = useState(() => {
+  const savedTransactions = localStorage.getItem('transactions')
+  return savedTransactions
+    ? JSON.parse(savedTransactions)
+    : transactions
+  })
+  useEffect(() => {
+  localStorage.setItem(
+    'transactions',
+    JSON.stringify(transactionList)
+  )
+  }, [transactionList]) 
+  
+  const [formData, setFormData] = useState({
+  description: '',
+  amount: '',
+  category: '',
+  date: '',
+  type: 'expense'
+  })
+  const handleChange = (event) => {
+  const { name, value } = event.target
+  setFormData({
+    ...formData,
+    [name]: value
+  })
+}
+const handleSubmit = (event) => {
+  event.preventDefault()
 
+  const newTransaction = {
+    id: Date.now(),
+    description: formData.description,
+    amount: Number(formData.amount),
+    category: formData.category,
+    date: formData.date,
+    type: formData.type
+  }
+
+  setTransactionList([
+    ...transactionList,
+    newTransaction
+  ])
+
+  setFormData({
+    description: '',
+    amount: '',
+    category: '',
+    date: '',
+    type: 'expense'
+  })
+}
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
@@ -14,12 +65,12 @@ function App() {
       <div className="transaction-page">
         <div className="transaction-history">
           <h2>Transaction History</h2>
-           {transactions.map((transaction) => (
+           {transactionList.map((transaction) => (
           <div className="history-item" key={transaction.id}>
           <div>
             <strong>{transaction.description}</strong>
             <span>
-              {transaction.category} • {transaction.date}
+              {transaction.category} - {transaction.date}
             </span>
           </div>
               <span
@@ -41,8 +92,7 @@ function App() {
           
   return (
     <div className="transaction-page">
-
-      <form className="transaction-form">
+      <form className="transaction-form" onSubmit={handleSubmit}>
         <div className="transaction-header">
         <h2>Add Transaction</h2>
         <p>Record a new income or expense.</p>
@@ -52,30 +102,41 @@ function App() {
           <input
             type="text"
             id="description"
+            name="description"
             placeholder="e.g. Lunch"
+            value={formData.description}
+            onChange={handleChange}
           />
         </div>
 
         <div className="form-group">
           <label htmlFor="amount">Amount</label>
-          <input
-            type="number"
-            id="amount"
-            placeholder="e.g. 200"
-            min="0"
-          />
+         <input
+          type="number"
+          id="amount"
+          name="amount"
+          placeholder="e.g. 200"
+          min="0"
+          value={formData.amount}
+          onChange={handleChange}
+        />
         </div>
 
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <select id="category">
+          <select
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+          >
             <option value="">Select a category</option>
-            <option value="food">Food</option>
-            <option value="transport">Transport</option>
-            <option value="shopping">Shopping</option>
-            <option value="bills">Rent</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="other">Other</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Bills">Bills</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
@@ -84,6 +145,9 @@ function App() {
           <input
             type="date"
             id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
           />
         </div>
 
@@ -96,7 +160,8 @@ function App() {
                 type="radio"
                 name="type"
                 value="expense"
-                defaultChecked
+                checked={formData.type === 'expense'}
+                onChange={handleChange}
               />
               Expense
             </label>
@@ -106,6 +171,8 @@ function App() {
                 type="radio"
                 name="type"
                 value="income"
+                checked={formData.type === 'income'}
+                onChange={handleChange}
               />
               Income
             </label>

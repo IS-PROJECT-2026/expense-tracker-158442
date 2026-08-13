@@ -57,6 +57,11 @@ const handleSubmit = (event) => {
     type: 'expense'
   })
 }
+  const handleDelete = (id) => {
+  setTransactionList(
+    transactionList.filter((transaction) => transaction.id !== id)
+  )
+  }
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
@@ -83,6 +88,11 @@ const handleSubmit = (event) => {
             {transaction.type === 'income' ? '+' : '-'} KSh{' '}
             {transaction.amount.toLocaleString()}
            </span>
+           <button
+            className="delete-button"
+            onClick={() => handleDelete(transaction.id)}>
+            Delete
+          </button>
             </div>
           ))}
         </div>

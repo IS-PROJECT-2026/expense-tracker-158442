@@ -245,3 +245,15 @@ body {
   color: #16a34a ;
   font-weight: bold;
 }
+.delete-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #c51f30;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #6e131c;
+}

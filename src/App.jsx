@@ -1,11 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import transactions from './data/transactions'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
   const [transactionPage, setTransactionPage] = useState('add')
-  const [transactionList, setTransactionList] = useState(transactions)
+  const [transactionList, setTransactionList] = useState(() => {
+  const savedTransactions = localStorage.getItem('transactions')
+  return savedTransactions
+    ? JSON.parse(savedTransactions)
+    : transactions
+  })
+  useEffect(() => {
+  localStorage.setItem(
+    'transactions',
+    JSON.stringify(transactionList)
+  )
+  }, [transactionList]) 
+  
   const [formData, setFormData] = useState({
   description: '',
   amount: '',

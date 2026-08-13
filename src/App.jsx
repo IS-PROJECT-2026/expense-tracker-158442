@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import transactions from './data/transactions'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
@@ -13,42 +14,31 @@ function App() {
       <div className="transaction-page">
         <div className="transaction-history">
           <h2>Transaction History</h2>
-          <div className="history-item">
-            <div>
-              <strong>Lunch</strong>
-              <span>Food - 13 Aug 2026</span>
-            </div>
-
-            <span className="expense-amount">
-              - KSh 500
+           {transactions.map((transaction) => (
+          <div className="history-item" key={transaction.id}>
+          <div>
+            <strong>{transaction.description}</strong>
+            <span>
+              {transaction.category} • {transaction.date}
             </span>
           </div>
-
-          <div className="history-item">
-            <div>
-              <strong>Transport</strong>
-              <span>Transport - 12 Aug 2026</span>
+              <span
+            className={
+              transaction.type === 'income'
+                ? 'income-amount'
+                : 'expense-amount'
+            }
+          >
+            {transaction.type === 'income' ? '+' : '-'} KSh{' '}
+            {transaction.amount.toLocaleString()}
+           </span>
             </div>
-
-            <span className="expense-amount">
-              - KSh 300
-            </span>
-          </div>
-
-          <div className="history-item">
-            <div>
-              <strong>Salary</strong>
-              <span>Income - 01 Aug 2026</span>
-            </div>
-
-            <span className="income-amount">
-              + KSh 40,000
-            </span>
-          </div>
+          ))}
         </div>
       </div>
     )
   }
+          
   return (
     <div className="transaction-page">
 

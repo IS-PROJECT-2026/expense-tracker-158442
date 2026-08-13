@@ -3,10 +3,52 @@ import './App.css'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
+  const [transactionPage, setTransactionPage] = useState('add')
 
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
+          if (transactionPage === 'history') {
+    return (
+      <div className="transaction-page">
+        <div className="transaction-history">
+          <h2>Transaction History</h2>
+          <div className="history-item">
+            <div>
+              <strong>Lunch</strong>
+              <span>Food - 13 Aug 2026</span>
+            </div>
+
+            <span className="expense-amount">
+              - KSh 500
+            </span>
+          </div>
+
+          <div className="history-item">
+            <div>
+              <strong>Transport</strong>
+              <span>Transport - 12 Aug 2026</span>
+            </div>
+
+            <span className="expense-amount">
+              - KSh 300
+            </span>
+          </div>
+
+          <div className="history-item">
+            <div>
+              <strong>Salary</strong>
+              <span>Income - 01 Aug 2026</span>
+            </div>
+
+            <span className="income-amount">
+              + KSh 40,000
+            </span>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="transaction-page">
 
@@ -86,6 +128,7 @@ function App() {
       </form>
     </div>
   )
+  
 
       case 'analytics':
         return (
@@ -158,12 +201,36 @@ function App() {
             Dashboard
           </button>
 
+          <div className="nav-section">
           <button
-            className={activePage === 'transactions' ? 'active' : ''}
-            onClick={() => setActivePage('transactions')}
+            className="nav-item"
+            onClick={() => {
+              setActivePage('transactions')
+              setTransactionPage('add')
+            }}
           >
-            Transactions
+            <span>Transactions</span>
+            <span>&#10095;</span>
           </button>
+
+          {activePage === 'transactions' && (
+            <div className="nav-submenu">
+              <button
+                onClick={() => setTransactionPage('add')}
+                className={transactionPage === 'add' ? 'active-subitem' : ''}
+              >
+                Add Transaction
+              </button>
+
+              <button
+                onClick={() => setTransactionPage('history')}
+                className={transactionPage === 'history' ? 'active-subitem' : ''}
+              >
+                Transaction History
+              </button>
+            </div>
+          )}
+        </div>
 
           <button
             className={activePage === 'analytics' ? 'active' : ''}

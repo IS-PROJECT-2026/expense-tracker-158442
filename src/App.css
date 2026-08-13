@@ -212,3 +212,36 @@ body {
   font-size: 15px;
   font-weight: bold;
 }
+
+/* TRANSACTION HISTORY */
+
+.transaction-history {
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0 20px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #065406;
+}
+
+.history-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.expense-amount {
+  color: #dc2626 ;
+  font-weight: bold;
+}
+.income-amount {
+  color: #16a34a ;
+  font-weight: bold;
+}

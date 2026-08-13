@@ -57,6 +57,16 @@ const handleSubmit = (event) => {
     type: 'expense'
   })
 }
+
+  const totalIncome = transactionList
+  .filter((transaction) => transaction.type === 'income')
+  .reduce((total, transaction) => total + transaction.amount, 0)
+
+  const totalExpenses = transactionList
+    .filter((transaction) => transaction.type === 'expense')
+    .reduce((total, transaction) => total + transaction.amount, 0)
+
+  const totalBalance = totalIncome - totalExpenses
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
@@ -206,17 +216,17 @@ const handleSubmit = (event) => {
             <div className="allcards">
               <div className="card">
                 <h3>Total Balance</h3>
-                <p>KSh 25,000</p>
+                <p>KSh {totalBalance.toLocaleString()}</p>
               </div>
 
               <div className="card">
                 <h3>Total Income</h3>
-                <p>KSh 40,000</p>
+                <p>KSh {totalIncome.toLocaleString()}</p>
               </div>
 
               <div className="card">
                 <h3>Total Expenses</h3>
-                <p>KSh 15,000</p>
+                <p>KSh {totalExpenses.toLocaleString()}</p>
               </div>
             </div>
 

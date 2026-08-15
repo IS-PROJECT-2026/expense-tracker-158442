@@ -257,3 +257,16 @@ body {
 .delete-button:hover {
   background-color: #6e131c;
 }
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  margin: 15px 0 20px;
+  border: 1px solid #4caf50;;
+  border-radius: 7px;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4caf50;
+}

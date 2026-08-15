@@ -5,6 +5,7 @@ import transactions from './data/transactions'
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
   const [transactionPage, setTransactionPage] = useState('add')
+  const [searchTerm, setSearchTerm] = useState('')
   const [transactionList, setTransactionList] = useState(() => {
   const savedTransactions = localStorage.getItem('transactions')
   return savedTransactions
@@ -74,6 +75,11 @@ const handleSubmit = (event) => {
   )
   }
   
+  const filteredTransactions = transactionList.filter((transaction) =>
+  transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  transaction.category.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
@@ -82,7 +88,16 @@ const handleSubmit = (event) => {
       <div className="transaction-page">
         <div className="transaction-history">
           <h2>Transaction History</h2>
-           {transactionList.map((transaction) => (
+          
+          <input
+            type="text"
+            placeholder="Search transactions..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            className="search-input"
+          />
+
+          {filteredTransactions.map((transaction) => (
           <div className="history-item" key={transaction.id}>
           <div>
             <strong>{transaction.description}</strong>

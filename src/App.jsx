@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import transactions from './data/transactions'
+import categories from './data/categories'
 
 function App() {
   const [activePage, setActivePage] = useState('dashboard')
   const [transactionPage, setTransactionPage] = useState('add')
   const [searchTerm, setSearchTerm] = useState('')
+  const [typeFilter, setTypeFilter] = useState('all')
+  const [categoryFilter, setCategoryFilter] = useState('all')
   const [transactionList, setTransactionList] = useState(() => {
   const savedTransactions = localStorage.getItem('transactions')
   return savedTransactions
@@ -75,10 +78,19 @@ const handleSubmit = (event) => {
   )
   }
   
-  const filteredTransactions = transactionList.filter((transaction) =>
-  transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  transaction.category.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredTransactions = transactionList.filter((transaction) => {
+  const matchesSearch =
+    transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    transaction.category.toLowerCase().includes(searchTerm.toLowerCase())
+
+  const matchesType =
+    typeFilter === 'all' || transaction.type === typeFilter
+
+  const matchesCategory =
+    categoryFilter === 'all' || transaction.category === categoryFilter
+
+  return matchesSearch && matchesType && matchesCategory
+  })
 
   const renderPage = () => {
     switch (activePage) {
@@ -96,6 +108,28 @@ const handleSubmit = (event) => {
             onChange={(event) => setSearchTerm(event.target.value)}
             className="search-input"
           />
+
+          <div className="filter-controls">
+          <select
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value)}
+          >
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+
+          <select
+            value={categoryFilter}
+            onChange={(event) => setCategoryFilter(event.target.value)}
+          >
+            {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+          </select>
+          </div>
 
           {filteredTransactions.map((transaction) => (
           <div className="history-item" key={transaction.id}>
@@ -167,13 +201,12 @@ const handleSubmit = (event) => {
             value={formData.category}
             onChange={handleChange}
           >
-            <option value="">Select a category</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Bills">Bills</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Other">Other</option>
+            <option value="all">All Categories</option>
+            {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+            ))}
           </select>
         </div>
 

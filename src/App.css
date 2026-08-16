@@ -270,3 +270,20 @@ body {
   outline: none;
   border-color: #4caf50;
 }
+
+.filter-controls {
+  display: flex;
+  gap: 30px;
+  margin: 15px 0;
+}
+
+.filter-controls select {
+  padding: 10px;
+  border: 1px solid #4caf50;
+  border-radius:7px;
+  cursor: pointer;
+}
+.filter-controls select:focus {
+  outline: none;
+  border-color: #4caf50;
+}

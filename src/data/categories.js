@@ -3,6 +3,7 @@ const categories = [
   'Transport',
   'Shopping',
   'Bills',
+  'Water',
   'Entertainment',
   'Other'
 ]

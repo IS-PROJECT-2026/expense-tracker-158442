@@ -6,6 +6,7 @@ const categories = [
   'Water',
   'Entertainment',
   'Other',
+  'Fees'
   'Electricity'
 ]
 

@@ -121,6 +121,12 @@ const handleSubmit = (event) => {
   return matchesSearch && matchesType && matchesCategory
   })
 
+  const clearFilters = () => {
+  setSearchTerm('')
+  setTypeFilter('all')
+  setCategoryFilter('all')
+}
+
   const renderPage = () => {
     switch (activePage) {
       case 'transactions':
@@ -152,12 +158,18 @@ const handleSubmit = (event) => {
             value={categoryFilter}
             onChange={(event) => setCategoryFilter(event.target.value)}
           >
+            <option value="all">All Categories</option>
             {categories.map((category) => (
             <option key={category} value={category}>
               {category}
             </option>
           ))}
           </select>
+          <button
+            className="clear-filters-button"
+            onClick={clearFilters}>
+            Clear Filters
+          </button>
           </div>
 
           {filteredTransactions.map((transaction) => (
@@ -333,9 +345,10 @@ const handleSubmit = (event) => {
                       ></div>
                     </div>
 
-                    <span className="chart-value">
-                      KSh {amount.toLocaleString()}
-                    </span>
+                  <div className="chart-value">
+                    <strong>KSh {amount.toLocaleString()}</strong>
+                    <span>{percentage.toFixed(1)}%</span>
+                  </div>
                   </div>
                 )
               })}

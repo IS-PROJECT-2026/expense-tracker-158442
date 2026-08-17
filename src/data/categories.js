@@ -5,7 +5,8 @@ const categories = [
   'Bills',
   'Water',
   'Entertainment',
-  'Other'
+  'Other',
+  'Electricity'
 ]
 
 export default categories

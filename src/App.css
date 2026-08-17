@@ -354,7 +354,28 @@ body {
 }
 
 .chart-value {
-  width: 110px;
-  text-align: right;
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.chart-value span {
+  font-size: 13px;
+  color: #5e8a68;
+}
+
+.clear-filters-button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 7px;
+  background-color: #1f9825;
+  color: white;
+  cursor: pointer;
   font-weight: 500;
+}
+
+.clear-filters-button:hover {
+  background-color: #16691b;
 }

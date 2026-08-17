@@ -39,6 +39,26 @@ function App() {
 const handleSubmit = (event) => {
   event.preventDefault()
 
+  if (!formData.description.trim()) {
+    alert('Please enter a transaction description')
+    return
+  }
+
+  if (!formData.amount || Number(formData.amount) <= 0) {
+    alert('Please enter an amount')
+    return
+  }
+
+  if (!formData.category) {
+    alert('Please select a category')
+    return
+  }
+
+  if (!formData.date) {
+    alert('Please select a date')
+    return
+  }
+
   const newTransaction = {
     id: Date.now(),
     description: formData.description,

@@ -91,6 +91,15 @@ const handleSubmit = (event) => {
     .reduce((total, transaction) => total + transaction.amount, 0)
 
   const totalBalance = totalIncome - totalExpenses
+
+  const categoryTotals = transactionList
+  .filter((transaction) => transaction.type === 'expense')
+  .reduce((totals, transaction) => {
+    totals[transaction.category] =
+      (totals[transaction.category] || 0) + transaction.amount
+
+    return totals
+  }, {})
   
   const handleDelete = (id) => {
   setTransactionList(
@@ -278,12 +287,63 @@ const handleSubmit = (event) => {
   
 
       case 'analytics':
-        return (
-          <div className="page-content">
-            <h2>Analytics</h2>
-            <p>View your spending insights</p>
+      return (
+        <div className="analytics-page">
+          <div className="analytics-header">
+            <h2>Analytics - View your spending insights</h2>
           </div>
-        )
+
+          <div className="analytics-cards">
+            <div className="card">
+              <h3>Total Income</h3>
+              <p>KSh {totalIncome.toLocaleString()}</p>
+            </div>
+
+            <div className="card">
+              <h3>Total Expenses</h3>
+              <p>KSh {totalExpenses.toLocaleString()}</p>
+            </div>
+
+            <div className="card">
+              <h3>Balance</h3>
+              <p>KSh {totalBalance.toLocaleString()}</p>
+            </div>
+          </div>
+
+        <div className="category-breakdown">
+          <h3>Spending by Category</h3>
+
+          {Object.entries(categoryTotals).length === 0 ? (
+            <p>No expense data available.</p>
+          ) : (
+            <div className="category-chart">
+              {Object.entries(categoryTotals).map(([category, amount]) => {
+                const percentage = totalExpenses
+                  ? (amount / totalExpenses) * 100
+                  : 0
+
+                return (
+                  <div className="chart-row" key={category}>
+                    <span className="chart-label">{category}</span>
+
+                    <div className="bar-container">
+                      <div
+                        className="bar"
+                        style={{ width: `${percentage}%` }}
+                      ></div>
+                    </div>
+
+                    <span className="chart-value">
+                      KSh {amount.toLocaleString()}
+                    </span>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+        </div>
+      )
 
       default:
         return (
@@ -311,23 +371,32 @@ const handleSubmit = (event) => {
             </div>
 
             <div className="recent-transactions">
-              <h3>Recent Transactions</h3>
+            <h3>Recent Transactions</h3>
 
-              <div className="transaction-item">
-                <span>Lunch</span>
-                <span>- KSh 500</span>
-              </div>
+            {transactionList.length === 0 ? (
+              <p>No transactions available.</p>
+            ) : (
+              transactionList
+                .slice(-5)
+                .reverse()
+                .map((transaction) => (
+                  <div className="transaction-item" key={transaction.id}>
+                    <span>{transaction.description}</span>
 
-              <div className="transaction-item">
-                <span>Transport</span>
-                <span>- KSh 300</span>
-              </div>
-
-              <div className="transaction-item">
-                <span>Salary</span>
-                <span>+ KSh 40,000</span>
-              </div>
-            </div>
+                    <span
+                      className={
+                        transaction.type === 'income'
+                          ? 'income-amount'
+                          : 'expense-amount'
+                      }
+                    >
+                      {transaction.type === 'income' ? '+' : '-'} KSh{' '}
+                      {transaction.amount.toLocaleString()}
+                    </span>
+                  </div>
+                ))
+            )}
+          </div>
           </div>
         )
     }
